@@ -17,8 +17,8 @@ const UserSchema = new Schema<IUser>({
     type: String,
     required: true,
     unique: true,
-    minlength: [3, "Username must be at least 3 characters long"],
-    maxlength: [30, "Username cannot exceed 30 characters"],
+    minlength: [3, 'Username must be at least 3 characters long'],
+    maxlength: [30, 'Username cannot exceed 30 characters']
   },
   email: {
     type: String,
@@ -29,9 +29,12 @@ const UserSchema = new Schema<IUser>({
   profile: {
     bio: {
       type: String,
-      maxlength: [500, "Bio cannot exceed 500 characters"],
+      maxlength: [500, 'Bio cannot exceed 500 characters']
     },
-    socialLinks: [{ type: String }],
+    socialLinks: [{
+      type: String,
+      validate: [validator.isURL, "Invalid URL for social link"]
+    }]
   },
   posts: [{ type: Schema.Types.ObjectId, ref: "Post" }],
 })
