@@ -17,6 +17,8 @@ const UserSchema = new Schema<IUser>({
     type: String,
     required: true,
     unique: true,
+    minlength: [3, "Username must be at least 3 characters long"],
+    maxlength: [30, "Username cannot exceed 30 characters"],
   },
   email: {
     type: String,
@@ -25,10 +27,13 @@ const UserSchema = new Schema<IUser>({
     validate: [validator.isEmail, "Invalid email address"],
   },
   profile: {
-    bio: {type: String},
-    socialLinks: [{type: String}]
+    bio: {
+      type: String,
+      maxlength: [500, "Bio cannot exceed 500 characters"],
+    },
+    socialLinks: [{ type: String }],
   },
-  posts: [{type: Schema.Types.ObjectId, ref: 'Post'}]
-}, {timestamps: true})
+  posts: [{ type: Schema.Types.ObjectId, ref: "Post" }],
+})
 
 export default mongoose.model<IUser>("User", UserSchema)
